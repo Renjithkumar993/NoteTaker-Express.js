@@ -93,6 +93,8 @@ app.delete("/api/notes/:notes_id", (req, res) => {
 
 
 
+
+
 app.listen(PORT, () =>
-  console.log(`Serving static asset routes on port http://127.0.0.1:${PORT}/ !`)
+  console.log(`Note Taker application running on http://127.0.0.1:${PORT}/ !`)
 );
