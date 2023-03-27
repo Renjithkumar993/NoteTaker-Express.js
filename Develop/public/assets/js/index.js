@@ -50,17 +50,33 @@ const deleteNote = (id) =>
     },
   });
 
+
+
+  const UpdateNote = (note,id) =>
+  fetch(`/api/notes/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body:JSON.stringify(note),
+  });
+
+
+
+
+
+
 const renderActiveNote = () => {
   hide(saveNoteBtn);
 
   if (activeNote.id) {
-    noteTitle.setAttribute('readonly', true);
-    noteText.setAttribute('readonly', true);
+    // noteTitle.setAttribute('readonly', true);
+    // noteText.setAttribute('readonly', true);
     noteTitle.value = activeNote.title;
     noteText.value = activeNote.text;
   } else {
-    noteTitle.removeAttribute('readonly');
-    noteText.removeAttribute('readonly');
+    // noteTitle.removeAttribute('readonly');
+    // noteText.removeAttribute('readonly');
     noteTitle.value = '';
     noteText.value = '';
   }
@@ -71,10 +87,18 @@ const handleNoteSave = () => {
     title: noteTitle.value,
     text: noteText.value,
   };
+
+  if (activeNote.id) {
+    UpdateNote(newNote,activeNote.id).then(() => {
+      getAndRenderNotes();
+      renderActiveNote();
+    });
+  }else{
   saveNote(newNote).then(() => {
     getAndRenderNotes();
     renderActiveNote();
   });
+}
 };
 
 // Delete the clicked note

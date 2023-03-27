@@ -1,4 +1,4 @@
-const { json } = require('express');
+const { json, text } = require('express');
 const express = require('express');
 const PORT = 3001;
 const app = express();
@@ -82,6 +82,37 @@ app.delete("/api/notes/:notes_id", (req, res) => {
 
 
 
+app.put("/api/notes/:notes_id", (req, res) => {
+  const upDateID = parseInt(req.params.notes_id);
+  const newTitle = req.body.title;
+  const newText = req.body.text;
+  for (let i = 0; i < notes.length; i++) {
+    if (upDateID === notes[i].id) {
+      notes[i].title = newTitle;
+      notes[i].text = newText;
+      const updatedNotes = notes.map((note) => {
+        if (note.id === upDateID) {
+          return {
+            title: newTitle,
+            text: newText,
+            id: upDateID
+          };
+        } else {
+          return note;
+        }
+      });
+      fs.writeFile("./db/db.json", JSON.stringify(updatedNotes), (err) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send('Internal server error');
+        } else {
+          res.json(updatedNotes);
+        }
+      });
+      return; 
+    }
+  }
+});
 
 
 
