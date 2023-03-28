@@ -52,13 +52,13 @@ const deleteNote = (id) =>
 
 
 
-  const UpdateNote = (note,id) =>
+const UpdateNote = (note, id) =>
   fetch(`/api/notes/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
-    body:JSON.stringify(note),
+    body: JSON.stringify(note),
   });
 
 
@@ -69,17 +69,12 @@ const deleteNote = (id) =>
 const renderActiveNote = () => {
   hide(saveNoteBtn);
 
-  if (activeNote.id) {
+
     // noteTitle.setAttribute('readonly', true);
     // noteText.setAttribute('readonly', true);
     noteTitle.value = activeNote.title;
     noteText.value = activeNote.text;
-  } else {
-    // noteTitle.removeAttribute('readonly');
-    // noteText.removeAttribute('readonly');
-    noteTitle.value = '';
-    noteText.value = '';
-  }
+
 };
 
 const handleNoteSave = () => {
@@ -89,16 +84,23 @@ const handleNoteSave = () => {
   };
 
   if (activeNote.id) {
-    UpdateNote(newNote,activeNote.id).then(() => {
+    UpdateNote(newNote, activeNote.id).then(() => {
+      renderActiveNote ();
+      setTimeout(() => {    
+       getAndRenderNotes();
+        renderActiveNote();
+        renderNoteList();
+      }, "1000");
+
+    });
+  } else {
+    saveNote(newNote).then(() => {
       getAndRenderNotes();
       renderActiveNote();
     });
-  }else{
-  saveNote(newNote).then(() => {
-    getAndRenderNotes();
-    renderActiveNote();
-  });
-}
+
+  }
+
 };
 
 // Delete the clicked note

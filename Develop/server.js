@@ -88,8 +88,6 @@ app.put("/api/notes/:notes_id", (req, res) => {
   const newText = req.body.text;
   for (let i = 0; i < notes.length; i++) {
     if (upDateID === notes[i].id) {
-      notes[i].title = newTitle;
-      notes[i].text = newText;
       const updatedNotes = notes.map((note) => {
         if (note.id === upDateID) {
           return {
