@@ -90,13 +90,18 @@ const handleNoteSave = () => {
 
   if (activeNote.id) {
     UpdateNote(newNote, activeNote.id).then(() => {
-      renderActiveNote ();
+
+  
       setTimeout(() => {    
        getAndRenderNotes();
         renderActiveNote();
-        renderNoteList();
+        renderNoteList()
+        noteTitle.value = newNote.title
+        noteText.value = newNote.text
+      
       }, "1000");
-
+   
+    
     });
   } else {
     saveNote(newNote).then(() => {
