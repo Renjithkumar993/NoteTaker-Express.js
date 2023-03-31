@@ -19,6 +19,7 @@ npm install
 To start the application, run the following command in the terminal:
 npm start
 Then, open a web browser and navigate to http://localhost:3001 to access the Note Taker application.
+Application also deplyed with heroku https://easynotetaker.herokuapp.com/ 
 
 Here's a walkthrough video to see how the application works :
 
